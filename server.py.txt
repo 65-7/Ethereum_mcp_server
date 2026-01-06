@@ -1,0 +1,46 @@
+from flask import Flask, jsonify, request
+from web3 import Web3
+import os
+
+app = Flask(__name__)
+
+INFURA_URL = os.getenv("INFURA_URL", "https://mainnet.infura.io/v3/YOUR_INFURA_KEY")
+web3 = Web3(Web3.HTTPProvider(INFURA_URL))
+
+@app.route("/block/<block_id>", methods=["GET"])
+def get_block(block_id):
+    try:
+        if block_id.startswith("0x"):
+            block = web3.eth.get_block(block_id)
+        else:
+            block = web3.eth.get_block(int(block_id))
+        return jsonify(dict(block))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+
+@app.route("/transaction/<tx_hash>", methods=["GET"])
+def get_transaction(tx_hash):
+    try:
+        txn = web3.eth.get_transaction(tx_hash)
+        return jsonify(dict(txn))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+
+@app.route("/account/<address>", methods=["GET"])
+def get_account(address):
+    try:
+        balance = web3.eth.get_balance(address)
+        nonce = web3.eth.get_transaction_count(address)
+        return jsonify({
+            "address": address,
+            "balance_ether": web3.from_wei(balance, 'ether'),
+            "nonce": nonce
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+
+if __name__ == "__main__":
+    app.run(port=4000)

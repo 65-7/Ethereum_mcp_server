@@ -1,0 +1,14 @@
+{
+  "get_block": {
+    "method": "GET",
+    "url": "http://127.0.0.1:8000/context/block/{block_id}"
+  },
+  "get_transaction": {
+    "method": "GET",
+    "url": "http://127.0.0.1:8000/context/transaction/{tx_hash}"
+  },
+  "get_account": {
+    "method": "GET",
+    "url": "http://127.0.0.1:8000/context/account/{address}"
+  }
+}

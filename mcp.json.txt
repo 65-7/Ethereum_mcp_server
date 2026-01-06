@@ -1,0 +1,48 @@
+{
+  "name": "Ethereum-context-server",
+  "description": "Provides real-time Ethereum context (blocks, transactions, and accounts) via REST API.",
+  "tools": [
+    {
+      "name": "get_block",
+      "description": "Fetch detailed Ethereum block information by block number or hash.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "block_id": {
+            "type": "string",
+            "description": "The Ethereum block number or block hash."
+          }
+        },
+        "required": ["block_id"]
+      }
+    },
+    {
+      "name": "get_transaction",
+      "description": "Fetch Ethereum transaction details using a transaction hash.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "tx_hash": {
+            "type": "string",
+            "description": "The Ethereum transaction hash."
+          }
+        },
+        "required": ["tx_hash"]
+      }
+    },
+    {
+      "name": "get_account",
+      "description": "Fetch Ethereum account details including balance, nonce, and contract status.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "Ethereum account address (starting with 0x)."
+          }
+        },
+        "required": ["address"]
+      }
+    }
+  ]
+}
